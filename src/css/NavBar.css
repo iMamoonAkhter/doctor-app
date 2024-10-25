@@ -1,0 +1,44 @@
+.navbar-container {
+    width: 70vw;
+    margin: 0 auto; /* Centers the navbar */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2a75bb; /* Blue background */
+    padding: 15px;
+  }
+  
+  .navbar-list {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar-list li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 400;
+  }
+  
+  .navbar-list li a.active {
+    font-weight: bold;
+  }
+  
+  .appointment-btn .btn-outline {
+    border: 1px solid white;
+    background-color: transparent;
+    color: white;
+    padding: 8px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .appointment-btn .btn-outline:hover {
+    background-color: white;
+    color: #2a75bb;
+    transition: 0.3s;
+  }
+  
