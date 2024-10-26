@@ -45,7 +45,10 @@
 
 
 
-
+.icon {
+  color: #0066cc;
+  font-size: 32px;
+}
 
 
 /* Slider Component CSS */
@@ -62,4 +65,49 @@
   font-size: 20px;
   background: #efefef;
   text-align: center;
+}
+
+
+/* Space every component */
+.com-margin{
+  margin: 0 auto;
+  margin-top: 5vw;
+}
+
+.c-white{
+  color: #fff;
+}
+.c-width-full{
+  width: 100vw;
+}
+.text-center{
+  text-align: center;
+}
+
+.com-bg{
+  background-color: #f5f6f2;
+}
+
+
+@media (max-width: 768px) {
+
+  .icon {
+      font-size: 24px;
+      margin-right: 1rem;
+  }
+
+  p {
+      font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .icon {
+      font-size: 10px;
+  }
+
+  p {
+      font-size: 0.7rem;
+  }
 }

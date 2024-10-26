@@ -11,23 +11,30 @@ import Navbar from './components/Navbar';
 import Experties from './pages/Experties';
 import Reviews from './pages/Reviews';
 import Slider from './components/Slider';
+import { AppProvider } from './context/AppContext';
+import BookAppointmentModal from './components/BookAppointmentModal';
+import Footer from './components/Footer';
 
 function App() {
   return (
-    <BrowserRouter>
-      <AddressBar />
-      <InfoBar />
-      <Navbar />
-      <Slider />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/expertise" element={<Experties />} />
-        <Route path="/reviews" element={<Reviews />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <AppProvider>
+        <BrowserRouter>
+          <AddressBar />
+          <InfoBar />
+          <Navbar />
+          <Slider />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/expertise" element={<Experties />} />
+            <Route path="/reviews" element={<Reviews />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <BookAppointmentModal />
+          <Footer />
+      </BrowserRouter>
+    </AppProvider>
   );
 }
 

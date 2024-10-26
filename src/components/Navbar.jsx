@@ -1,7 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
 import '../css/NavBar.css'; 
+import { useContext } from 'react';
+import { AppContext } from '../context/AppContext';
 
 const Navbar = () => {
+  const { openModal } = useContext(AppContext);
 
     const Links = [
         {title: "Home", path: "/"},
@@ -23,7 +26,7 @@ const Navbar = () => {
         
       </ul>
       <div className="appointment-btn">
-        <button className="btn-outline">GET APPOINTMENT</button>
+        <button className="btn-outline" onClick={openModal}>GET APPOINTMENT</button>
       </div>
     </nav>
   );

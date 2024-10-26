@@ -11,9 +11,9 @@ const InfoBar = () => {
       </div>
 
       {/* Call Us Section */}
-      <div className="d-flex align-items-center">
+      <div className="d-flex align-items-center justify-content-between">
         <div className='icon-box'>
-            <FaPhoneAlt size={20} className="icon" />
+            <FaPhoneAlt className="icon" />
         </div>
         <div className="ms-2">
           <p className="mb-0">CALL US NOW :</p>
@@ -22,9 +22,9 @@ const InfoBar = () => {
       </div>
 
       {/* Email Section */}
-      <div className="d-flex align-items-center">
+      <div className="d-flex align-items-center justify-content-between">
         <div className="icon-box">
-            <FaEnvelope size={20} className="icon" />
+            <FaEnvelope className="icon" />
         </div>
         <div className="ms-2">
           <p className="mb-0">MAILING ADDRESS :</p>
@@ -33,9 +33,9 @@ const InfoBar = () => {
       </div>
 
       {/* Working Hours Section */}
-      <div className="d-flex align-items-center">
+      <div className="d-flex align-items-center justify-content-between">
         <div className="icon-box">
-            <FaClock size={20} className="icon" />
+            <FaClock className="icon" />
         </div>
         <div className="ms-2">
           <p className="mb-0">Monday - Friday :</p>

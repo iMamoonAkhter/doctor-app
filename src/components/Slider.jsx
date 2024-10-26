@@ -24,7 +24,6 @@ const Slider = () => {
         <div className="slide-container" style={{ backgroundImage: `url(${images[0]})` }}>
             <div className={`text-container ${getAnimationClass(0)}`}>
                 <h1 style={{marginBottom: "5vw"}}>{location.pathname.slice(1).toUpperCase()}</h1>
-                <button className="learn-more-btn">LEARN MORE</button>
             </div>
         </div>
     );
@@ -42,7 +41,6 @@ const Slider = () => {
                                     Dr. Zubair Ahmad Cheema is a UK trained & experienced Urologist, currently working as a 
                                     Laparoscopic Urological Surgeon at Evercare Hospital, Lahore.
                                 </p>
-                                <button className="learn-more-btn">LEARN MORE</button>
                             </div>
                         </div>
                     </div>
@@ -55,7 +53,6 @@ const Slider = () => {
                                 <p>
                                     Specialized in laparoscopic and minimally invasive urological surgeries for a range of conditions.
                                 </p>
-                                <button className="learn-more-btn">LEARN MORE</button>
                             </div>
                         </div>
                     </div>
@@ -68,7 +65,6 @@ const Slider = () => {
                                 <p>
                                     Using state-of-the-art technology and techniques to provide the best medical care for patients.
                                 </p>
-                                <button className="learn-more-btn">LEARN MORE</button>
                             </div>
                         </div>
                     </div>
