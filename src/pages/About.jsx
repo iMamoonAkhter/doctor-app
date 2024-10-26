@@ -6,7 +6,6 @@ const About = () => {
   const doctorInfo = {
     name: "Dr. John Doe",
     heading: "Clinical Psychologist & Speech Pathologist",
-    experience: "10 years",
     image: "doctor-image.jpg"
   };
 
@@ -58,7 +57,6 @@ const About = () => {
         <div className="doctor-info">
           <h1 className="doctor-name">{doctorInfo.name}</h1>
           <h2 className="doctor-heading">{doctorInfo.heading}</h2>
-          <p className="doctor-experience">Experience: {doctorInfo.experience}</p>
         </div>
       </section>
 

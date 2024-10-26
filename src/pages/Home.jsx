@@ -13,7 +13,7 @@ const Home = () => {
             <h1>PRINCIPLES OF PRACTICE</h1>
           </div>
           <div style={{ textAlign: 'justify', color: '#333', flex: "2" }}>
-            <p>
+            <p style={{fontSize: "1rem"}}>
               Treat patients with respect and dignity, all while carefully listening to all 
               their concerns and questions. Consequently, ensure to clearly explain the diagnosis 
               and treatment, and be available for advice in emergency situations.

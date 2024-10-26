@@ -50,7 +50,7 @@ const WorkingHours = () => {
           ))}
 
           <div className="contact-info">
-            <p className="c-white">Phone / Whatsapp</p>
+            <p className="c-white" style={{fontSize: "1.5vw"}}>Phone / Whatsapp</p>
             <h3 className="phone-number c-white">0321-4994240</h3>
             <button className="appointment-button" onClick={openModal}>GET APPOINTMENT</button>
           </div>

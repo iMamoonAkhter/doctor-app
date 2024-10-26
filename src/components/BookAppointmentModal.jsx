@@ -20,6 +20,7 @@ const BookAppointmentModal = () => {
   const handleClose = () => {
     setAnimationClass("animate__animated animate__backOutUp");
     setTimeout(closeModal, 500);
+    formik.resetForm();
   };
 
   const formik = useFormik({
@@ -34,7 +35,7 @@ const BookAppointmentModal = () => {
       name: Yup.string().required("Name is required"),
       contact: Yup.string()
         .required("Contact Number is required")
-        .matches(/^[0-9]{10}$/, "Must be a valid 10-digit number"),
+        .matches(/^[0-9]{11}$/, "Must be a valid 11-digit number"),
       date: Yup.date().required("Date is required"),
       subject: Yup.string().required("Subject is required"),
       message: Yup.string().min(20, "Message must be at least 20 characters").required("Message is required"),
@@ -47,7 +48,18 @@ const BookAppointmentModal = () => {
 
   return (
     <Modal open={isModalOpen} onClose={handleClose} className="d-flex justify-content-center align-content-center">
-      <ModalDialog layout="center" size="sm" variant="outlined" className={animationClass}>
+      <ModalDialog
+        layout="center"
+        size="sm"
+        variant="outlined"
+        className={animationClass}
+        sx={{
+          top: '25%',
+          left: '35%',
+          transform: 'translate(0, 0)', // Adjusting the position
+          position: 'absolute', // Making sure custom positioning takes effect
+        }}
+      >
         <ModalClose onClick={handleClose} />
         <Typography variant="h5" component="h2" gutterBottom>
           Book Appointment
@@ -56,9 +68,8 @@ const BookAppointmentModal = () => {
           Please fill in your details to book an appointment.
         </Typography>
         <form onSubmit={formik.handleSubmit}>
-
           {/* Row 1 - Name and Contact Number */}
-          <div className="d-flex gap-2 mb-3">
+          <div className="d-flex gap-2 mb-3 justify-content-between">
             <FormControl>
               <FormLabel>Name</FormLabel>
               <Input
@@ -95,7 +106,7 @@ const BookAppointmentModal = () => {
           </div>
 
           {/* Row 2 - Date and Subject */}
-          <div className="d-flex gap-2 mb-3">
+          <div className="d-flex gap-2 mb-3 justify-content-between">
             <FormControl>
               <FormLabel>Date</FormLabel>
               <Input
