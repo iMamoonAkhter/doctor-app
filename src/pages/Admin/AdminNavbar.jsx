@@ -22,37 +22,52 @@ const Navbar = () => {
     return (
         <>
             {/* Navbar */}
-            <BootstrapNavbar bg="light" expand="lg" className="d-flex justify-content-between">
+            <BootstrapNavbar bg="light" expand="lg" className="d-flex">
+                <div style={{marginRight:"1vw"}}>
                 <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
                     <MenuIcon />
                 </IconButton>
-                <BootstrapNavbar.Brand href="#">EveCare Hospital - Admin Panel</BootstrapNavbar.Brand>
+                </div>
+                <div>
+                <BootstrapNavbar.Brand>EveCare Hospital - Admin Panel</BootstrapNavbar.Brand>
+
+                </div>
                 <BootstrapNavbar.Toggle aria-controls="responsive-navbar-nav" />
-                <BootstrapNavbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="ml-auto">
-                        <button className="btn btn-link" aria-label="Logout" onClick={handleLogout}>
-                            <FaSignOutAlt size={24} />
-                        </button>
-                    </Nav>
-                </BootstrapNavbar.Collapse>
             </BootstrapNavbar>
 
             {/* Drawer */}
-            <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
+            <Drawer
+            sx={{
+                width: 240,  // Change this value to increase the width
+                flexShrink: 0, // Prevents Drawer from shrinking
+                '& .MuiDrawer-paper': {
+                  width: 240, // Set width of the Drawer content
+                  backgroundColor: 'lightgray', // Optional: customize background color
+                },
+              }}
+               anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
                 <List>
                     <ListItem button>
-                        <ListItemText primary="Home" onClick={()=> handleNavigation('/admin')} />
+                        <ListItemText style={{cursor:"pointer"}} primary="Home" onClick={()=> handleNavigation('/admin')} />
                     </ListItem>
                     <ListItem button>
-                        <ListItemText primary="Reviews" onClick={()=> handleNavigation('/admin/reviews')} />
+                        <ListItemText style={{cursor:"pointer"}} primary="Reviews" onClick={()=> handleNavigation('/admin/reviews')} />
                     </ListItem>
                     <ListItem button>
-                        <ListItemText primary="Experties" onClick={()=> handleNavigation('/admin/experties')} />
+                        <ListItemText style={{cursor:"pointer"}} primary="Experties" onClick={()=> handleNavigation('/admin/experties')} />
                     </ListItem>
                     <ListItem button>
-                        <ListItemText primary="Add Doctor" onClick={()=> handleNavigation('/admin/workinghours')} />
+                        <ListItemText style={{cursor:"pointer"}} primary="Add Doctor" onClick={()=> handleNavigation('/admin/workinghours')} />
                     </ListItem>
-                    
+                    <ListItem button>
+                        <ListItemText style={{cursor:"pointer"}} primary="About" onClick={()=> handleNavigation('/admin/bio')} />
+                    </ListItem>
+                    <ListItem button>
+                        <ListItemText style={{cursor:"pointer"}} primary="Setting" onClick={()=> handleNavigation('/admin/settings')} />
+                    </ListItem>
+                    <ListItem button>
+                        <ListItemText style={{cursor:"pointer"}} primary="Logout" onClick={()=> handleLogout()} />
+                    </ListItem>
                 </List>
             </Drawer>
         </>

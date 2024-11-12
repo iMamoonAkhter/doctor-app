@@ -1,5 +1,6 @@
 // src/AppContext.js
-import { createContext, useState } from 'react';
+import axios from 'axios';
+import { createContext, useEffect, useState } from 'react';
 
 // Create the context
 export const AppContext = createContext();
@@ -13,8 +14,24 @@ export const AppProvider = ({ children }) => {
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
+    const [setting, setSetting] = useState([]);
+    const fetchSetting = async () => {
+        try {
+          const response = await axios.get("http://localhost:5000/api/settings/");
+          setSetting(response.data);
+          console.log(setting)
+        } catch (error) {
+          console.error("Error fetching bio:", error);
+        }
+      };
+
+    useEffect(() => {
+        fetchSetting();
+    }, [])
+    
+
     return (
-        <AppContext.Provider value={{ isModalOpen, openModal, closeModal, email, setEmail, password, setPassword }}>
+        <AppContext.Provider value={{ isModalOpen, openModal, closeModal, email, setEmail, password, setPassword, setting }}>
             {children}
         </AppContext.Provider>
     );

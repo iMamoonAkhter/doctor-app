@@ -78,11 +78,11 @@ const AddWorkingHours = () => {
                         </div>
                     ))}
                 </div>
+                <div style={{display: "flex", justifyContent:"center", flexDirection:"column", alignContent:"center"}}>
                 <button type="button" className="btn btn-success mb-3" onClick={handleAddDayAndTime}>Add Another Day & Time</button>
-
-                <br />
                 <button type="submit" className="btn btn-primary">Add Working Hours</button>
                 <button type="button" className="btn btn-secondary" style={{ marginLeft: "1vw" }} onClick={() => navigate('/admin/workinghours')}>Back</button>
+                </div>
             </form>
         </div>
     );

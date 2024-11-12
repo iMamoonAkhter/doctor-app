@@ -26,6 +26,9 @@ import AddExpertie from './pages/Admin/AddExpertie';
 import AdminWorkingHours from './pages/Admin/AdminWorkingHours';
 import UpdateWorkingHours from './pages/Admin/UpdateWorkingHours';
 import AddWorkingHours from './pages/Admin/AddWorkingHours';
+import ReviewAppointments from './pages/Admin/ReviewAppointments';
+import AdminSettings from './pages/Admin/AdminSetting';
+import AdminBio from './pages/Admin/AdminBio';
 
 function App() {
   return (
@@ -55,6 +58,10 @@ function App() {
             <Route path="/admin/workinghours/:id" element={<UpdateWorkingHours />} />
             <Route path="/admin/workinghours/add" element={<AddWorkingHours />} />
             <Route path="/admin/updateClinicInfo" element={<AddHospitalForm />} />
+            <Route path="/admin/settings" element={<AdminSettings />} />
+            <Route path="/admin/bio" element={<AdminBio />} />
+            <Route path="/admin/reviewAppointment" element={<ReviewAppointments />} />
+            
 
           </Route>
         </Routes>

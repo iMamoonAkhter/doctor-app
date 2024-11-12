@@ -1,9 +1,11 @@
 import { Modal, ModalClose, ModalDialog, Typography, Button, Input, FormControl, FormLabel } from "@mui/joy";
 import "animate.css";
+import "react-phone-input-2/lib/style.css";
 import { useEffect, useState, useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AppContext } from "../context/AppContext";
+import PhoneInput from "react-phone-input-2";
 
 const BookAppointmentModal = () => {
   const { isModalOpen, closeModal } = useContext(AppContext);
@@ -33,16 +35,34 @@ const BookAppointmentModal = () => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Name is required"),
-      contact: Yup.string()
-        .required("Contact Number is required")
-        .matches(/^[0-9]{11}$/, "Must be a valid 11-digit number"),
+      contact: Yup.string().required("Contact Number is required"),
       date: Yup.date().required("Date is required"),
       subject: Yup.string().required("Subject is required"),
       message: Yup.string().min(20, "Message must be at least 20 characters").required("Message is required"),
     }),
-    onSubmit: (values, { resetForm }) => {
-      console.log("Form submitted successfully:", values);
-      resetForm();
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        const response = await fetch('http://localhost:5000/api/appointments/appointment', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to submit appointment');
+        }
+
+        const data = await response.json();
+        console.log("Form submitted successfully:", data);
+        alert('Appointment booked successfully');
+        resetForm();
+        handleClose();
+      } catch (error) {
+        console.error('Error:', error);
+        alert('There was an error booking your appointment.');
+      }
     },
   });
 
@@ -55,12 +75,12 @@ const BookAppointmentModal = () => {
         className={animationClass}
         sx={{
           top: '20%',
-          left: '25%', // Center the dialog horizontally
-          transform: 'translate(-50%, -25%)', // Center it vertically and horizontally
-          width: '800px', // Set a custom width
-          height: 'auto', // You can specify a height or leave it auto
-          maxHeight: '80vh', // Limit max height
-          overflowY: 'auto', // Allow scrolling if the content exceeds the max height
+          left: '25%',
+          transform: 'translate(-50%, -25%)',
+          width: '800px',
+          height: 'auto',
+          maxHeight: '80vh',
+          overflowY: 'auto',
         }}
       >
         <ModalClose onClick={handleClose} />
@@ -71,7 +91,6 @@ const BookAppointmentModal = () => {
           Please fill in your details to book an appointment.
         </Typography>
         <form onSubmit={formik.handleSubmit}>
-          {/* Row 1 - Name and Contact Number */}
           <div className="d-flex gap-2 mb-3 justify-content-between">
             <FormControl>
               <FormLabel>Name</FormLabel>
@@ -81,100 +100,82 @@ const BookAppointmentModal = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 style={{width: '23vw'}}
-                error={formik.touched.name && !!formik.errors.name}
                 placeholder="Enter your name"
               />
-              {formik.touched.name && formik.errors.name && (
-                <Typography color="danger" level="body3">
-                  {formik.errors.name}
-                </Typography>
-              )}
+              {formik.touched.name && formik.errors.name ? (
+                <div className="text-danger">{formik.errors.name}</div>
+              ) : null}
             </FormControl>
 
             <FormControl>
               <FormLabel>Contact Number</FormLabel>
-              <Input
-                name="contact"
-                style={{width: '23vw'}}
+              <PhoneInput
+                country={'us'}
                 value={formik.values.contact}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.contact && !!formik.errors.contact}
+                onChange={(value) => formik.setFieldValue('contact', value)}
+                inputClass="w-100"
+                style={{width: '23vw'}}
                 placeholder="Enter contact number"
               />
-              {formik.touched.contact && formik.errors.contact && (
-                <Typography color="danger" level="body3">
-                  {formik.errors.contact}
-                </Typography>
-              )}
+              {formik.touched.contact && formik.errors.contact ? (
+                <div className="text-danger">{formik.errors.contact}</div>
+              ) : null}
             </FormControl>
           </div>
 
-          {/* Row 2 - Date and Subject */}
-          <div className="d-flex gap-2 mb-3 justify-content-between">
-            <FormControl>
+          <div className="mb-3">
+            <FormControl fullWidth>
               <FormLabel>Date</FormLabel>
               <Input
-                name="date"
                 type="date"
+                name="date"
                 value={formik.values.date}
-                style={{width: '23vw'}}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={formik.touched.date && !!formik.errors.date}
               />
-              {formik.touched.date && formik.errors.date && (
-                <Typography color="danger" level="body3">
-                  {formik.errors.date}
-                </Typography>
-              )}
+              {formik.touched.date && formik.errors.date ? (
+                <div className="text-danger">{formik.errors.date}</div>
+              ) : null}
             </FormControl>
+          </div>
 
-            <FormControl>
+          <div className="mb-3">
+            <FormControl fullWidth>
               <FormLabel>Subject</FormLabel>
               <Input
                 name="subject"
                 value={formik.values.subject}
                 onChange={formik.handleChange}
-                style={{width: '23vw'}}
                 onBlur={formik.handleBlur}
-                error={formik.touched.subject && !!formik.errors.subject}
-                placeholder="Enter subject"
+                placeholder="Enter the subject"
               />
-              {formik.touched.subject && formik.errors.subject && (
-                <Typography color="danger" level="body3">
-                  {formik.errors.subject}
-                </Typography>
-              )}
+              {formik.touched.subject && formik.errors.subject ? (
+                <div className="text-danger">{formik.errors.subject}</div>
+              ) : null}
             </FormControl>
           </div>
 
-          {/* Row 3 - Message */}
           <div className="mb-3">
-            <FormControl>
+            <FormControl fullWidth>
               <FormLabel>Message</FormLabel>
               <Input
                 name="message"
-                multiline
-                minRows={3}
                 value={formik.values.message}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={formik.touched.message && !!formik.errors.message}
                 placeholder="Enter your message"
+                multiline
+                rows={4}
               />
-              {formik.touched.message && formik.errors.message && (
-                <Typography color="danger" level="body3">
-                  {formik.errors.message}
-                </Typography>
-              )}
+              {formik.touched.message && formik.errors.message ? (
+                <div className="text-danger">{formik.errors.message}</div>
+              ) : null}
             </FormControl>
           </div>
 
-          {/* Submit Button */}
-          <button type="submit" className="btn btn-outline-primary" >
+          <Button type="submit" variant="solid" fullWidth>
             Submit
-          </button>
+          </Button>
         </form>
       </ModalDialog>
     </Modal>
