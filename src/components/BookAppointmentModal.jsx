@@ -50,14 +50,17 @@ const BookAppointmentModal = () => {
     <Modal open={isModalOpen} onClose={handleClose} className="d-flex justify-content-center align-content-center">
       <ModalDialog
         layout="center"
-        size="sm"
+        size="lg"
         variant="outlined"
         className={animationClass}
         sx={{
-          top: '25%',
-          left: '35%',
-          transform: 'translate(0, 0)', // Adjusting the position
-          position: 'absolute', // Making sure custom positioning takes effect
+          top: '20%',
+          left: '25%', // Center the dialog horizontally
+          transform: 'translate(-50%, -25%)', // Center it vertically and horizontally
+          width: '800px', // Set a custom width
+          height: 'auto', // You can specify a height or leave it auto
+          maxHeight: '80vh', // Limit max height
+          overflowY: 'auto', // Allow scrolling if the content exceeds the max height
         }}
       >
         <ModalClose onClick={handleClose} />
@@ -77,6 +80,7 @@ const BookAppointmentModal = () => {
                 value={formik.values.name}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                style={{width: '23vw'}}
                 error={formik.touched.name && !!formik.errors.name}
                 placeholder="Enter your name"
               />
@@ -91,6 +95,7 @@ const BookAppointmentModal = () => {
               <FormLabel>Contact Number</FormLabel>
               <Input
                 name="contact"
+                style={{width: '23vw'}}
                 value={formik.values.contact}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -113,6 +118,7 @@ const BookAppointmentModal = () => {
                 name="date"
                 type="date"
                 value={formik.values.date}
+                style={{width: '23vw'}}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={formik.touched.date && !!formik.errors.date}
@@ -130,6 +136,7 @@ const BookAppointmentModal = () => {
                 name="subject"
                 value={formik.values.subject}
                 onChange={formik.handleChange}
+                style={{width: '23vw'}}
                 onBlur={formik.handleBlur}
                 error={formik.touched.subject && !!formik.errors.subject}
                 placeholder="Enter subject"
@@ -165,9 +172,9 @@ const BookAppointmentModal = () => {
           </div>
 
           {/* Submit Button */}
-          <Button type="submit" color="primary" variant="contained" fullWidth>
+          <button type="submit" className="btn btn-outline-primary" >
             Submit
-          </Button>
+          </button>
         </form>
       </ModalDialog>
     </Modal>

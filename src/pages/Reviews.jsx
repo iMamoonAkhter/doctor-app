@@ -1,33 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FaStar } from "react-icons/fa";
 import "../css/Reviews.css";
-
+import {format} from 'date-fns';
 const Reviews = () => {
-  const [reviews, setReviews] = useState([
-    { id: 1, name: "John Doe", date: "2024-10-01", time: "14:00", rating: 4, message: "Great experience!" },
-    { id: 2, name: "Jane Smith", date: "2024-10-02", time: "16:30", rating: 5, message: "Excellent service!" },
-  ]);
+  const [reviews, setReviews] = useState([]);
+
+  // Fetch reviews from API when component mounts
+  const fetchReviews = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/reviews/");
+      setReviews(response.data.reviews); // Assuming the API response is an array of reviews
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+    }
+  };
+  useEffect(() => {
+    
+
+    fetchReviews();
+  }, []);
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      date: new Date().toISOString().split("T")[0],  // Pre-fill with current date
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),  // Pre-fill with current time
+      patientName: "",  // changed from "name" to "patientName"
+      date: new Date().toISOString().split("T")[0],
+      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       rating: 0,
       message: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Name is required"),
+      patientName: Yup.string().required("Name is required"),
       date: Yup.string().required("Date is required"),
       time: Yup.string().required("Time is required"),
       rating: Yup.number().min(1, "Please provide a rating").required("Rating is required"),
       message: Yup.string().min(20, "Message must be at least 20 characters").required("Message is required"),
     }),
-    onSubmit: (values, { resetForm }) => {
-      setReviews([...reviews, { ...values, id: Date.now() }]);
-      resetForm();
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        const response = await axios.post("http://localhost:5000/api/reviews/", values);
+        //for toast console.log(response.data.message);
+        resetForm();
+        fetchReviews();
+      } catch (error) {
+        console.error("Error adding review:", error);
+      }
     },
   });
 
@@ -43,15 +62,17 @@ const Reviews = () => {
           <div className="form-group">
             <label htmlFor="name">Patient Name</label>
             <input
-              id="name"
-              name="name"
+              id="patientName"
+              name="patientName"
               type="text"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.name}
-              className={formik.touched.name && formik.errors.name ? "input-error" : ""}
+              value={formik.values.patientName}
+              className={formik.touched.patientName && formik.errors.patientName ? "input-error" : ""}
             />
-            {formik.touched.name && formik.errors.name ? <div className="error-message">{formik.errors.name}</div> : null}
+            {formik.touched.patientName && formik.errors.patientName && (
+              <div className="error-message">{formik.errors.patientName}</div>
+            )}
           </div>
 
           <div className="form-group">
@@ -65,7 +86,9 @@ const Reviews = () => {
               value={formik.values.date}
               className={formik.touched.date && formik.errors.date ? "input-error" : ""}
             />
-            {formik.touched.date && formik.errors.date ? <div className="error-message">{formik.errors.date}</div> : null}
+            {formik.touched.date && formik.errors.date && (
+              <div className="error-message">{formik.errors.date}</div>
+            )}
           </div>
 
           <div className="form-group">
@@ -79,7 +102,9 @@ const Reviews = () => {
               value={formik.values.time}
               className={formik.touched.time && formik.errors.time ? "input-error" : ""}
             />
-            {formik.touched.time && formik.errors.time ? <div className="error-message">{formik.errors.time}</div> : null}
+            {formik.touched.time && formik.errors.time && (
+              <div className="error-message">{formik.errors.time}</div>
+            )}
           </div>
 
           <div className="form-group">
@@ -94,7 +119,9 @@ const Reviews = () => {
                 />
               ))}
             </div>
-            {formik.touched.rating && formik.errors.rating ? <div className="error-message">{formik.errors.rating}</div> : null}
+            {formik.touched.rating && formik.errors.rating && (
+              <div className="error-message">{formik.errors.rating}</div>
+            )}
           </div>
 
           <div className="form-group">
@@ -107,19 +134,26 @@ const Reviews = () => {
               value={formik.values.message}
               className={formik.touched.message && formik.errors.message ? "input-error" : ""}
             />
-            {formik.touched.message && formik.errors.message ? <div className="error-message">{formik.errors.message}</div> : null}
+            {formik.touched.message && formik.errors.message && (
+              <div className="error-message">{formik.errors.message}</div>
+            )}
           </div>
 
-          <button type="submit" className="submit-button">Submit Review</button>
+          <button type="submit" className="submit-button">
+            Submit Review
+          </button>
         </form>
       </div>
 
-      <div className="reviews-list com-margin" style={{marginBottom: "5vw"}}>
-        {reviews.map((review) => (
+      <div className="reviews-list com-margin" style={{ marginBottom: "5vw" }}>
+      {reviews.map((review) => (
           <div key={review.id} className="review-card">
-            <h3>{review.name}</h3>
+            <h3>{review.patientName}</h3>
             <h4>PATIENT</h4>
-            <p>{review.date} - {review.time}</p>
+            <p>
+              {review.date ? format(new Date(review.date), 'MMMM dd, yyyy') : 'Unknown Date'} - 
+              {review.time || 'Unknown Time'}
+            </p>
             <p>{review.message}</p>
             <div className="rating">
               {[...Array(review.rating)].map((_, i) => (

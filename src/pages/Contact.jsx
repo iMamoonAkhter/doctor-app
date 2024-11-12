@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import "../css/Contact.css"; // Import your CSS file
 import { FaClock, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
 import { AppContext } from "../context/AppContext";
+import { contactFormSubmission } from "../services/contactServices";
 
 const Contact = () => {
   const { openModal } = useContext(AppContext);
@@ -13,7 +14,6 @@ const Contact = () => {
       email: "",
       phone: "",
       message: "",
-      date: new Date().toLocaleString(),
     },
     validationSchema: Yup.object({
       name: Yup.string()
@@ -32,9 +32,22 @@ const Contact = () => {
     }),
     validateOnBlur: true,
     validateOnChange: true,
-    onSubmit: (values, { resetForm }) => {
-      console.log(values);
+    onSubmit: async (values, { resetForm }) => {
       resetForm();
+      try {
+        const response=await contactFormSubmission(JSON.stringify({
+          name:formik.values.name,
+          email:formik.values.email,
+          phone:formik.values.phone,
+          message:formik.values.message,
+        }))
+        if (response.status == 200) {
+
+        console.log(response.data)
+      }
+     } catch (error) {
+        console.log(error)
+      }
     },
   });
 

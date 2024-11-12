@@ -18,6 +18,14 @@ import AdminHome from './pages/Admin/AdminHome';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AdminAbout from './pages/Admin/AdminAbout';
+import AddHospitalForm from './pages/Admin/AdminForms';
+import ReviewTable from './pages/Admin/AdminReviews';
+import AdminExperties from './pages/Admin/AdminExperties';
+import UpdateExpertie from './pages/Admin/UpdateExpertie';
+import AddExpertie from './pages/Admin/AddExpertie';
+import AdminWorkingHours from './pages/Admin/AdminWorkingHours';
+import UpdateWorkingHours from './pages/Admin/UpdateWorkingHours';
+import AddWorkingHours from './pages/Admin/AddWorkingHours';
 
 function App() {
   return (
@@ -33,12 +41,21 @@ function App() {
             <Route path="/reviews" element={<Reviews />} />
             <Route path="*" element={<NotFound />} />
           </Route>
+          <Route path="/admin-login" element={<Login />} />
 
           {/* Admin Routes */}
           <Route element={<AdminLayout />}>
-            <Route path="/admin-login" element={<Login />} />
             <Route path="/admin" element={<AdminHome />} />
             <Route path="/admin/about" element={<AdminAbout />} />
+            <Route path="/admin/reviews" element={<ReviewTable />} />
+            <Route path="/admin/experties" element={<AdminExperties />} />
+            <Route path="/admin/experties/:id" element={<UpdateExpertie />} />
+            <Route path="/admin/experties/add" element={<AddExpertie />} />
+            <Route path="/admin/workinghours" element={<AdminWorkingHours />} />
+            <Route path="/admin/workinghours/:id" element={<UpdateWorkingHours />} />
+            <Route path="/admin/workinghours/add" element={<AddWorkingHours />} />
+            <Route path="/admin/updateClinicInfo" element={<AddHospitalForm />} />
+
           </Route>
         </Routes>
         <BookAppointmentModal />
