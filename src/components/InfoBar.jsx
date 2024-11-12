@@ -1,8 +1,12 @@
 import { FaPhoneAlt, FaEnvelope, FaClock } from 'react-icons/fa';
 import logoImg from "../assets/images/Logo1.png";
 import '../css/InfoBar.css' // Assuming you'll add custom styles here
+import { useContext } from 'react';
+import { AppContext } from '../context/AppContext';
 
 const InfoBar = () => {
+  const data = useContext(AppContext);
+  const {setting} = data;
   return (
     <div className="d-flex justify-content-between align-items-center info-bar-container m-auto c-width-1">
       {/* Logo Section */}
@@ -17,7 +21,7 @@ const InfoBar = () => {
         </div>
         <div className="ms-2">
           <p className="mb-0">CALL US NOW :</p>
-          <p className="mb-0">0321 4994240</p>
+          <p className="mb-0">{setting.contactNumber}</p>
         </div>
       </div>
 
@@ -28,7 +32,7 @@ const InfoBar = () => {
         </div>
         <div className="ms-2">
           <p className="mb-0">MAILING ADDRESS :</p>
-          <p className="mb-0">drzacheema@gmail.com</p>
+          <p className="mb-0">{setting.email}</p>
         </div>
       </div>
 

@@ -21,7 +21,8 @@ const contactInfo = {
 
 const Footer = () => {
   const { openModal } = useContext(AppContext);
-
+  const data = useContext(AppContext);
+  const {setting} = data;
   return (
     <footer className="footer">
       <div className="footer-container c-width-1">
@@ -32,7 +33,7 @@ const Footer = () => {
       <div className="footer-info c-width-1 m-auto">
         <div className="footer-column logo-column">
           <img src={logo} alt="Logo" className="footer-logo m-auto" /> {/* Replace with actual logo path */}
-          <p className="about-us">Dr. Zubair Cheema, a highly skilled and experienced Urologist trained in the UK. Seek personalized care at Evercare Hospital, Lahore, for a wide range of urological malignancies, complex disorders, kidney stone treatments, urinary tract diseases, prostate enlargement, and men’s health issues.</p>
+          <p className="about-us">{setting.footerText}</p>
         </div>
         <div className="footer-column services-column">
           <h3>Our Services</h3>
@@ -44,9 +45,9 @@ const Footer = () => {
         </div>
         <div className="footer-column contact-column">
           <h3>Contact Us</h3>
-          <div className='d-flex'><IoMdMail style={{fontSize: "1.5vw", marginRight: "0.5vw"}} /><p style={{color: "#fff"}}>Email: {contactInfo.email}</p></div>
-          <div className='d-flex'><IoCall style={{fontSize: "1.5vw", marginRight: "0.5vw"}} /><p style={{color: "#fff"}}>Phone: {contactInfo.phone}</p></div>
-          <div className='d-flex'><ImLocation2 style={{fontSize: "1.5vw", marginRight: "0.5vw"}} /><p style={{color: "#fff"}}>Location: {contactInfo.location}</p></div>
+          <div className='d-flex'><IoMdMail style={{fontSize: "1.5vw", marginRight: "0.5vw"}} /><p style={{color: "#fff"}}>Email: {setting.email}</p></div>
+          <div className='d-flex'><IoCall style={{fontSize: "1.5vw", marginRight: "0.5vw"}} /><p style={{color: "#fff"}}>Phone: {setting.contactNumber}</p></div>
+          <div className='d-flex'><ImLocation2 style={{fontSize: "1.5vw", marginRight: "0.5vw"}} /><p style={{color: "#fff"}}>Location: {setting.location}</p></div>
         </div>
       </div>
     </footer>

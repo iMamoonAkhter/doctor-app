@@ -19,7 +19,7 @@ export const AppProvider = ({ children }) => {
         try {
           const response = await axios.get("http://localhost:5000/api/settings/");
           setSetting(response.data);
-          console.log(setting)
+          console.log(response.data)
         } catch (error) {
           console.error("Error fetching bio:", error);
         }
