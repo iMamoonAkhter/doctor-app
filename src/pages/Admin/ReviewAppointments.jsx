@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { AppContext } from '../../context/AppContext';
 
 const AdminReviewAppointments = () => {
   const [appointments, setAppointments] = useState([]);
   const [filteredAppointments, setFilteredAppointments] = useState([]);
   const [filterStatus, setFilterStatus] = useState('all');
-
+  const {API} = useContext(AppContext);
   useEffect(() => {
     // Fetch all appointments on component mount
-    fetch('http://localhost:5000/api/appointments')
+    fetch(`${API}/appointments`)
       .then(response => response.json())
       .then(data => {
         setAppointments(data);
@@ -34,7 +35,7 @@ const AdminReviewAppointments = () => {
   };
 
   const handleStatusUpdate = (id, newStatus) => {
-    fetch(`http://localhost:5000/api/appointments/appointment/${id}/status`, {
+    fetch(`${API}/appointments/appointment/${id}/status`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

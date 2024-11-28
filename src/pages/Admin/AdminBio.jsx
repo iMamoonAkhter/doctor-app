@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 const AdminBio = () => {
   
-  const {bio} = useContext(AppContext);
+  const {bio, API} = useContext(AppContext);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -38,7 +38,7 @@ const AdminBio = () => {
     onSubmit: async (values) => {
       try {
         const updatedBio = { ...values };
-        const response = await axios.put("http://localhost:5000/api/bio/", updatedBio);
+        const response = await axios.put(`${API}/bio/`, updatedBio);
         if(response.ok){
           toast.success("Profile Updated Successful!");
         }

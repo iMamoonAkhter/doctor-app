@@ -10,7 +10,7 @@ import PhoneInput from "react-phone-input-2";
 const BookAppointmentModal = () => {
   const { isModalOpen, closeModal } = useContext(AppContext);
   const [animationClass, setAnimationClass] = useState("");
-
+  const {API} = useContext(AppContext)
   useEffect(() => {
     if (isModalOpen) {
       setAnimationClass("animate__animated animate__backInUp");
@@ -42,7 +42,7 @@ const BookAppointmentModal = () => {
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
-        const response = await fetch('http://localhost:5000/api/appointments/appointment', {
+        const response = await fetch(`${API}/appointments/appointment`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

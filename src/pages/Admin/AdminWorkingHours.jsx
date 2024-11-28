@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../../css/AdminWorkingHours.css'; // Custom CSS for styling
+import { AppContext } from '../../context/AppContext';
 
 const AdminWorkingHours = () => {
     const [workingHours, setWorkingHours] = useState([]);
-    
+    const {API} = useContext(AppContext)
     useEffect(() => {
         fetchWorkingHours();
     }, []);
 
     const fetchWorkingHours = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/working-hours/');
+            const response = await axios.get(`${API}/working-hours/`);
             setWorkingHours(response.data);
         } catch (error) {
             console.error('Error fetching working hours:', error);
@@ -22,7 +23,7 @@ const AdminWorkingHours = () => {
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this working hour?')) {
             try {
-                await axios.delete(`http://localhost:5000/api/working-hours/${id}`);
+                await axios.delete(`${API}/working-hours/${id}`);
                 fetchWorkingHours(); // Refresh the data
             } catch (error) {
                 console.error('Error deleting working hour:', error);

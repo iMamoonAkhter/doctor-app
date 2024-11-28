@@ -10,6 +10,7 @@ export const Submit = (props) => {
   const { keyname = 'submit', ...elmProps } = props;
   const { setEmail, setPassword, email, password } = useContext(AppContext);
   const navigate = useNavigate();
+  const {API} = useContext(AppContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -21,7 +22,7 @@ export const Submit = (props) => {
     setPassword(passwordInput);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post(`${API}/auth/login`, {
         email: email,
         password: password,
       });

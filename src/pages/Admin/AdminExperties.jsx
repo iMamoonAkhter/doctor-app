@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from '../../context/AppContext';
 
 const AdminExperties = () => {
   const [expertiseList, setExpertiseList] = useState([]);
   const navigate = useNavigate();
+  const {API} = useContext(AppContext);
 
   useEffect(() => {
     const fetchExpertise = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/expertise/');
+        const response = await axios.get(`${API}/expertise/`);
         setExpertiseList(response.data);
       } catch (error) {
         console.error('Error fetching expertise:', error);
@@ -20,7 +22,7 @@ const AdminExperties = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/expertise/${id}`);
+      await axios.delete(`${API}/expertise/${id}`);
       setExpertiseList(expertiseList.filter(expertise => expertise._id !== id));
     } catch (error) {
       console.error('Error deleting expertise:', error);

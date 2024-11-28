@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Import Font Awesome icon
 import { faTrash } from '@fortawesome/free-solid-svg-icons'; // Import the trash icon
 import '../../css/AdminReviews.css'; // Optional: for custom styling
 import { toast } from 'react-toastify';
+import { AppContext } from '../../context/AppContext';
 
 const ReviewTable = () => {
   const [reviews, setReviews] = useState([]);
+  const {API} = useContext(AppContext);
   const fetchReviews = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/reviews/');
+      const response = await axios.get(`${API}/reviews/`);
       setReviews(response.data.reviews);
     } catch (error) {
       console.error('Error fetching reviews:', error);
@@ -24,7 +26,7 @@ const ReviewTable = () => {
   // Function to handle deletion of a review
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/api/reviews/${id}`);      
+      const response = await axios.delete(`${API}/reviews/${id}`);      
       toast.success(response.data.message);
       fetchReviews();
     } catch (error) {

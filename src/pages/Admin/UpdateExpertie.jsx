@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FaTrash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import { AppContext } from '../../context/AppContext';
 
 const UpdateExpertie = () => {
   const { id } = useParams();
   const [title, setTitle] = useState('');
   const [bulletPoints, setBulletPoints] = useState([]);
   const navigate = useNavigate();
-
+  const {API} = useContext(AppContext);
   useEffect(() => {
     const fetchExpertise = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/expertise/${id}`);
+        const response = await axios.get(`${API}/expertise/${id}`);
         setTitle(response.data.title);
         setBulletPoints(response.data.bulletPoints);
       } catch (error) {
@@ -36,7 +37,7 @@ const UpdateExpertie = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/api/expertise/${id}`, {
+      await axios.put(`${API}/expertise/${id}`, {
         title,
         bulletPoints: bulletPoints.filter(point => point.trim()),
       });

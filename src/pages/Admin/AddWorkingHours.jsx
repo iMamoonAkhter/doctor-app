@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import "../../css/AddWorkingHours.css";
+import { AppContext } from '../../context/AppContext';
 
 const AddWorkingHours = () => {
     const [doctorName, setDoctorName] = useState('');
@@ -9,7 +10,7 @@ const AddWorkingHours = () => {
     const [doctorIntroduction, setDoctorIntroduction] = useState(''); // Added state for doctorIntroduction
     const [daysAndTiming, setDaysAndTiming] = useState([{ day: '', time: '' }]);
     const navigate = useNavigate();
-
+    const {API} = useContext(AppContext);
     const handleChangeDayAndTime = (index, event) => {
         const { name, value } = event.target;
         const newDaysAndTiming = [...daysAndTiming];
@@ -36,7 +37,7 @@ const AddWorkingHours = () => {
         };
 
         try {
-            await axios.post('http://localhost:5000/api/working-hours/add', workingHourData);
+            await axios.post(`${API}/working-hours/add`, workingHourData);
             navigate('/admin/workinghours'); // Redirect to the working hours page
         } catch (error) {
             console.error('Error adding working hours:', error);

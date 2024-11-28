@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import "../../css/AdminSettings.css";
+import { AppContext } from "../../context/AppContext";
 
 const AdminSettings = () => {
   const [settings, setSettings] = useState({
@@ -14,7 +15,7 @@ const AdminSettings = () => {
     location: '',
     footerText: ''
   });
-
+  const {API} = useContext(AppContext);
   // Function to convert 12-hour time to 24-hour time
   const convertTo24Hour = (time12h) => {
     const [time, modifier] = time12h.split(" ");
@@ -31,7 +32,7 @@ const AdminSettings = () => {
 
   const fetchSettings = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/settings");
+      const response = await axios.get(`${API}/settings`);
       // Convert hospital timing times to 24-hour format
       const formattedTiming = response.data.hospitalTiming.map(timing => ({
         ...timing,
@@ -81,7 +82,7 @@ const AdminSettings = () => {
             closeTime: timing.closeTime
           }))
         };
-        const response = await axios.put("http://localhost:5000/api/settings/", updatedSettings);
+        const response = await axios.put(`${API}/settings/`, updatedSettings);
         console.log("Settings updated successfully:", response.data);
         fetchSettings();
       } catch (error) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -6,13 +6,14 @@ import { FaStar } from "react-icons/fa";
 import "../css/Reviews.css";
 import {format} from 'date-fns';
 import { toast } from "react-toastify";
+import { AppContext } from "../context/AppContext";
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
-
+  const {API} = useContext(AppContext);
   // Fetch reviews from API when component mounts
   const fetchReviews = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/reviews/");
+      const response = await axios.get(`${API}/reviews/`);
       setReviews(response.data.reviews); // Assuming the API response is an array of reviews
     } catch (error) {
       console.error("Error fetching reviews:", error);
@@ -41,7 +42,7 @@ const Reviews = () => {
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
-        const response = await axios.post("http://localhost:5000/api/reviews/", values);
+        const response = await axios.post(`${API}/reviews/`, values);
         toast.success(response.data.message);
         resetForm();
         fetchReviews();

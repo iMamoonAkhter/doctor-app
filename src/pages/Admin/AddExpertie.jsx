@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaTrash } from 'react-icons/fa';
+import { AppContext } from '../../context/AppContext';
 
 const AddExpertie = () => {
   const [title, setTitle] = useState('');
   const [bulletPoints, setBulletPoints] = useState(['']);
   const navigate = useNavigate();
-
+  const {API} = useContext(AppContext);
   const handleAddBulletPoint = () => setBulletPoints([...bulletPoints, '']);
   const handleBulletPointChange = (index, value) => {
     const updatedPoints = [...bulletPoints];
@@ -22,7 +23,7 @@ const AddExpertie = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/expertise/add', {
+      await axios.post(`${API}/expertise/add`, {
         title,
         bulletPoints: bulletPoints.filter(point => point.trim()),
       });

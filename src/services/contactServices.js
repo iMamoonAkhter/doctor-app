@@ -1,8 +1,11 @@
 import axios from "axios";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
 
 export const contactFormSubmission = (userData) => {
+  const {API} = useContext(AppContext);
   return axios.post(
-    "http://localhost:5000/api/query/submit",
+    `${API}/query/submit`,
     userData,
     {
       headers: {

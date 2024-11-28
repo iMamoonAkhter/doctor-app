@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../../css/UpdateWorkingHours.css'; // Custom CSS for styling
 import { toast } from 'react-toastify';
+import { AppContext } from '../../context/AppContext';
 
 const UpdateWorkingHours = () => {
     const { id } = useParams();
@@ -13,11 +14,11 @@ const UpdateWorkingHours = () => {
         doctorIntroduction: '', // Added state for doctorIntroduction
         daysAndTiming: [{ day: '', time: '' }],
     });
-
+    const {API} = useContext(AppContext);
     useEffect(() => {
         const fetchWorkingHour = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/working-hours/${id}`);
+                const response = await axios.get(`${API}/working-hours/${id}`);
                 setWorkingHour(response.data);
             } catch (error) {
                 console.error('Error fetching working hour:', error);
@@ -46,7 +47,7 @@ const UpdateWorkingHours = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await axios.put(`http://localhost:5000/api/working-hours/${id}`, workingHour);
+            await axios.put(`${API}/working-hours/${id}`, workingHour);
             navigate('/admin/workinghours'); // Redirect to the working hours page
             toast.success("Updated Working Hours")
         } catch (error) {

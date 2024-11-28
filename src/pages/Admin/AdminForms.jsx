@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap is imported
 import '../../css/AddHospitalForm.css'; // Import custom CSS
+import { AppContext } from '../../context/AppContext';
 
 const AddHospitalForm = () => {
     const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ const AddHospitalForm = () => {
         location: '',
         footerText: ''
     });
+    const {API} = useContext(AppContext);
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
@@ -46,7 +48,7 @@ const AddHospitalForm = () => {
         });
 
         try {
-            const response = await axios.post('http://localhost:5000/api/clinic/add', data, {
+            const response = await axios.post(`${API}/clinic/add`, data, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
