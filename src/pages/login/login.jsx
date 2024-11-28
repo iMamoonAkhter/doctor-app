@@ -75,7 +75,6 @@ const LoginPage = forwardRef((props, ref) => {
     <Provider>
       <Email />
       <Password />
-      <Logo />
       <Title />
       <Submit />
       <Container {...divProps} ref={ref} className={`login-page4 ${className || ''}`}>

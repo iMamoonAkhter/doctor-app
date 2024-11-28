@@ -3,6 +3,7 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Import Font Awesome icon
 import { faTrash } from '@fortawesome/free-solid-svg-icons'; // Import the trash icon
 import '../../css/AdminReviews.css'; // Optional: for custom styling
+import { toast } from 'react-toastify';
 
 const ReviewTable = () => {
   const [reviews, setReviews] = useState([]);
@@ -24,7 +25,7 @@ const ReviewTable = () => {
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(`http://localhost:5000/api/reviews/${id}`);      
-      console.log(response.data.message);
+      toast.success(response.data.message);
       fetchReviews();
     } catch (error) {
       console.error('Error deleting review:', error);

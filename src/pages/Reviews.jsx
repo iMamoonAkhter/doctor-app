@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { FaStar } from "react-icons/fa";
 import "../css/Reviews.css";
 import {format} from 'date-fns';
+import { toast } from "react-toastify";
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
 
@@ -41,9 +42,10 @@ const Reviews = () => {
     onSubmit: async (values, { resetForm }) => {
       try {
         const response = await axios.post("http://localhost:5000/api/reviews/", values);
-        //for toast console.log(response.data.message);
+        toast.success(response.data.message);
         resetForm();
         fetchReviews();
+
       } catch (error) {
         console.error("Error adding review:", error);
       }

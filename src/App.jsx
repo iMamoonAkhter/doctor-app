@@ -29,8 +29,10 @@ import AddWorkingHours from './pages/Admin/AddWorkingHours';
 import ReviewAppointments from './pages/Admin/ReviewAppointments';
 import AdminSettings from './pages/Admin/AdminSetting';
 import AdminBio from './pages/Admin/AdminBio';
+import Cookies from 'js-cookie';
 
 function App() {
+  console.log("Token: ",Cookies.get('authToken'));
   return (
     <AppProvider>
       <BrowserRouter>
@@ -44,10 +46,10 @@ function App() {
             <Route path="/reviews" element={<Reviews />} />
             <Route path="*" element={<NotFound />} />
           </Route>
-          <Route path="/admin-login" element={<Login />} />
+          {!Cookies.get('authToken') && <Route path="/admin-login" element={<Login />} />}
 
           {/* Admin Routes */}
-          <Route element={<AdminLayout />}>
+          {Cookies.get('authToken') &&<Route element={<AdminLayout />}>
             <Route path="/admin" element={<AdminHome />} />
             <Route path="/admin/about" element={<AdminAbout />} />
             <Route path="/admin/reviews" element={<ReviewTable />} />
@@ -63,7 +65,7 @@ function App() {
             <Route path="/admin/reviewAppointment" element={<ReviewAppointments />} />
             
 
-          </Route>
+          </Route>}
         </Routes>
         <BookAppointmentModal />
       </BrowserRouter>

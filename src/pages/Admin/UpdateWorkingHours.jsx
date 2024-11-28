@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../../css/UpdateWorkingHours.css'; // Custom CSS for styling
+import { toast } from 'react-toastify';
 
 const UpdateWorkingHours = () => {
     const { id } = useParams();
@@ -47,8 +48,10 @@ const UpdateWorkingHours = () => {
         try {
             await axios.put(`http://localhost:5000/api/working-hours/${id}`, workingHour);
             navigate('/admin/workinghours'); // Redirect to the working hours page
+            toast.success("Updated Working Hours")
         } catch (error) {
             console.error('Error updating working hours:', error);
+            toast.error("Error in updating. Check your internet");
         }
     };
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FaTrash } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 const UpdateExpertie = () => {
   const { id } = useParams();
@@ -40,6 +41,7 @@ const UpdateExpertie = () => {
         bulletPoints: bulletPoints.filter(point => point.trim()),
       });
       navigate('/admin/experties');
+      toast.success("Added Successfully!");
     } catch (error) {
       console.error('Error updating expertise:', error);
     }

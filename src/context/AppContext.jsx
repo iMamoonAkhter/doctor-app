@@ -10,9 +10,26 @@ export const AppProvider = ({ children }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    const [info, setInfo] = useState('');
+    const [reviews, setReview] = useState('');
+    const [appointments, setAppointments] = useState('');
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
+
+
+    const [bio, setBio] = useState({
+      image: '',
+      name: '',
+      heading: '',
+      experience: [],
+      aboutMe: '',
+      education: [],
+      services: [],
+      specialization: [],
+      languagesSpoken: [],
+      professionalBackground: ''
+    });
+
 
     const [setting, setSetting] = useState([]);
     const fetchSetting = async () => {
@@ -24,14 +41,44 @@ export const AppProvider = ({ children }) => {
           console.error("Error fetching bio:", error);
         }
       };
+      const fetchBio = async () => {
+        try {
+          const response = await axios.get("http://localhost:5000/api/bio");
+          setBio(response.data);
+        } catch (error) {
+          console.error("Error fetching bio:", error);
+        }
+      };
 
+      const fetchReviews = async ()=>{
+        try {
+          const response = await axios.get("http://localhost:5000/api/reviews/");
+          setReview(response.data)
+        } catch (error) {
+          console.log("Error fetching reviews:", error);
+        }
+      }
+
+
+      const fetchAppointment = async ()=>{
+        try {
+          const response = await axios.get("http://localhost:5000/api/appointments/");
+          setAppointments(response.data)
+          
+        } catch (error) {
+          console.log("Failed to fetch appointment")
+        }
+      }
     useEffect(() => {
         fetchSetting();
+        fetchBio();
+        fetchReviews();
+        fetchAppointment();
     }, [])
     
 
     return (
-        <AppContext.Provider value={{ isModalOpen, openModal, closeModal, email, setEmail, password, setPassword, setting }}>
+        <AppContext.Provider value={{ isModalOpen, openModal, closeModal, email, setEmail, password, setPassword, setting, bio, setBio, reviews, appointments }}>
             {children}
         </AppContext.Provider>
     );

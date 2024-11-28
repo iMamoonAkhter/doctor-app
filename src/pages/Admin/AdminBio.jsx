@@ -1,35 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import "../../css/AdminBio.css";
+import { AppContext } from "../../context/AppContext";
+import { toast } from "react-toastify";
 
 const AdminBio = () => {
-  const [bio, setBio] = useState({
-    image: '',
-    name: '',
-    heading: '',
-    experience: [],
-    aboutMe: '',
-    education: [],
-    services: [],
-    specialization: [],
-    languagesSpoken: [],
-    professionalBackground: ''
-  });
-
-  const fetchBio = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/api/bio");
-      setBio(response.data);
-    } catch (error) {
-      console.error("Error fetching bio:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchBio();
-  }, []);
+  
+  const {bio} = useContext(AppContext);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -60,10 +39,11 @@ const AdminBio = () => {
       try {
         const updatedBio = { ...values };
         const response = await axios.put("http://localhost:5000/api/bio/", updatedBio);
-        console.log("Bio updated successfully:", response.data);
-        fetchBio();
+        if(response.ok){
+          toast.success("Profile Updated Successful!");
+        }
       } catch (error) {
-        console.error("Error updating bio:", error);
+        toast.error("Error updating bio");
       }
     },
   });
