@@ -28,9 +28,13 @@ export const Submit = (props) => {
       });
 
       if (response.status === 200 || response.status === 201) {
-        toast.success("Login Successful!");
         Cookies.set('authToken', response.data.token, { expires: 7 });
-        navigate('/admin');
+
+        // Wait momentarily to ensure the cookie is set
+        setTimeout(() => {
+          toast.success('Login Successful!');
+          navigate('/admin');
+        }, 1000);
       } else {
         toast.error('Login failed: ' + response.data.message);
       }

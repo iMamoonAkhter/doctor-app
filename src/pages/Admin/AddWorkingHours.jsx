@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import "../../css/AddWorkingHours.css";
 import { AppContext } from '../../context/AppContext';
+import { toast } from 'react-toastify';
 
 const AddWorkingHours = () => {
     const [doctorName, setDoctorName] = useState('');
@@ -39,8 +40,10 @@ const AddWorkingHours = () => {
         try {
             await axios.post(`${API}/working-hours/add`, workingHourData);
             navigate('/admin/workinghours'); // Redirect to the working hours page
+            toast.success("Added Successful");
         } catch (error) {
             console.error('Error adding working hours:', error);
+            toast.error("Error! Please try again later");
         }
     };
 
